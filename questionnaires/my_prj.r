@@ -63,6 +63,7 @@ both <- both[, -c(
 
 # get final name coloums
 final_col_names <- names(netflix)
+write.csv(final_col_names, ".\\data\\final_col_names.csv")
 
 # apply coloums names required for joining the tables
 colnames(prime) <- final_col_names

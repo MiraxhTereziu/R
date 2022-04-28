@@ -71,6 +71,10 @@ colnames(both) <- final_col_names
 
 # table join
 new_data <- rbind(both, netflix, prime)
+
+#deleting an entry of a very funny guy
+new_data <- new_data[new_data$gender != "Ginofobico",]
+
 print(dim(my_data))
 print(dim(new_data))
 # save cleand data on csv file

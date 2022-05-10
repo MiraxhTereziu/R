@@ -15,10 +15,6 @@ both_questions <- c(84:149)
 
 open_q <- c(30, 31, 40, 63, 64, 73, 77)
 
-# save on file coloums names for using it later
-# starting_col_names <- names(my_data)
-# write.csv(starting_col_names, ".\\data\\col_names.csv")
-
 # get coloums names from cvs file
 starting_col_names <- read.csv(".\\data\\col_names.csv")
 # data manipulation to for type matching
@@ -46,14 +42,12 @@ netflix <- netflix[, -c(
     both_socio,
     both_questions
 )]
-# print(dim(netflix))
 
 prime <- prime[, -c(
     netflix_socio,
     both_socio,
     both_questions
 )]
-# print(dim(prime))
 
 both <- both[, -c(
     netflix_socio,
@@ -62,25 +56,14 @@ both <- both[, -c(
     prime_questions,
     open_q
 )]
-# print(dim(both))
 
-# get final name coloums
-# final_col_names <- names(netflix)
-# write.csv(final_col_names, ".\\data\\final_col_names.csv")
-
-# apply coloums names required for joining the tables
-# colnames(prime) <- final_col_names
-
-# table join
-# new_data <- rbind(both, netflix, prime)
-
+# delete open ended questions
 both <- both[, -c(
     open_q
 )]
 
 # get coloums names from cvs file
 final_col_names <- read.csv(".\\data\\final_col_names.csv")
-print(final_col_names)
 # data manipulation to for type matching
 final_col_names <- final_col_names[, -c(1)]
 
@@ -92,13 +75,19 @@ new_data <- new_data[new_data$gender != "Ginofobico", ]
 
 print(dim(my_data))
 print(dim(new_data))
-print("t")
 
-id <- c(1:(length(new_data)+1))
+#adding id coulum
+id <- c(1:(length(new_data) + 1))
 new_data <- cbind(id, new_data)
+
+#fixing wrong scale proportion
+new_data$N_frequency <- new_data$N_frequency * 1.4
+
 # save cleand data on csv file
 write.csv(new_data, ".\\data\\streaming_dataset_clean.csv")
 
-# now the data is clean and beatiful, terrific!
+#filtering multiple answer questions
+print(typeof(new_data$influencing_factors))
+test <- as.list(strsplit(new_data$influencing_factors, ","))
 
-print(mean(new_data$PV_USE16))
+# now the data is clean and beatiful, terrific!
